@@ -1,76 +1,81 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Calculate.css';
 
 function Calculate() {
 
-  let arg1 = 0;
-  let arg2 = 0;
-  let opr;
+  const [arg1, setArg1] = useState(0);
+  const [arg2, setArg2] = useState(0);
+  const [opr, setOpr] = useState('');
+  const [total, setTotal] = useState(0)
 
-  function setNum(num) {
-    document.getElementById("input").value += num;
+  function correctArg(val) {
+    if(opr === '')
+    {
+      console.log(opr);
+      setArg1(arg1 === 0 ? val : arg1+val);
+    }
+    else
+      setArg2(arg2 === 0 ? val : arg2+val);
   }
 
   function resetValue() {
-    document.getElementById("input").value='';
+    setArg1(0);
+    setArg2(0);
+    setOpr('');
+    setTotal(0);
   }
 
   function setOprt(operator) {
-    opr = operator;
-    setArg();
-    resetValue();
-  }
-
-  function setArg(){
-    arg1 = document.getElementById("input").value;
-    arg1 = parseInt(arg1, 10);
+    setOpr(operator);
   }
 
   function performCalculation() {
-    arg2 = document.getElementById("input").value;
-    arg2 = parseInt(arg2, 10);
+    let num1 = parseInt(arg1);
+    let num2 = parseInt(arg2);
     switch(opr) {
       case '+':
-        document.getElementById("input").value = arg1+arg2;
+        setTotal(num1 + num2);
         break;
       
       case '-':
-        document.getElementById("input").value = arg1-arg2;
+        setTotal(num1 - num2)
         break;
 
       case '*':
-        document.getElementById("input").value = arg1*arg2;
+        setTotal(num1 * num2);
         break;
 
       case '/':
-        document.getElementById("input").value = arg1/arg2;
+        setTotal(num1 / num2);
         break;
 
       default:
-        document.getElementById("input").value = arg1;
+        setTotal(num1);
     }
   }
 
   return (
     <div className="Calculate">
-      <input type="number" id="input" /><br />
+      <input type="number" id="input1" value={arg1} readOnly /><br />
+      <input type="number" id="input2" value={arg2} readOnly /><br />
+      <input type="number" id="total" value={total} readOnly /><br />
       <div className="Keys">
-          <button id="one" value={1} onClick={e => setNum(e.target.value)}>1</button>
-          <button id="two" value={2} onClick={e => setNum(e.target.value)}>2</button>
-          <button id="thr" value={3} onClick={e => setNum(e.target.value)}>3</button>
+          <button id="one" value={1} onClick={e => correctArg(e.target.value)}>1</button>
+          <button id="two" value={2} onClick={e => correctArg(e.target.value)}>2</button>
+          <button id="thr" value={3} onClick={e => correctArg(e.target.value)}>3</button>
           <button id="clr" onClick={resetValue}>C</button>
           <br/>
-          <button id="for" value={4} onClick={e => setNum(e.target.value)}>4</button>
-          <button id="fiv" value={5} onClick={e => setNum(e.target.value)}>5</button>
-          <button id="six" value={6} onClick={e => setNum(e.target.value)}>6</button>
+          <button id="for" value={4} onClick={e => correctArg(e.target.value)}>4</button>
+          <button id="fiv" value={5} onClick={e => correctArg(e.target.value)}>5</button>
+          <button id="six" value={6} onClick={e => correctArg(e.target.value)}>6</button>
           <button id="pls" value="+" onClick={e => setOprt(e.target.value)}>+</button>
           <br/>
-          <button id="sev" value={7} onClick={e => setNum(e.target.value)}>7</button>
-          <button id="eig" value={8} onClick={e => setNum(e.target.value)}>8</button>
-          <button id="nin" value={9} onClick={e => setNum(e.target.value)}>9</button>
+          <button id="sev" value={7} onClick={e => correctArg(e.target.value)}>7</button>
+          <button id="eig" value={8} onClick={e => correctArg(e.target.value)}>8</button>
+          <button id="nin" value={9} onClick={e => correctArg(e.target.value)}>9</button>
           <button id="sub" value="-" onClick={e => setOprt(e.target.value)}>-</button>
           <br/>
-          <button id="zer" value={0} onClick={e => setNum(e.target.value)}>0</button>
+          <button id="zer" value={0} onClick={e => correctArg(e.target.value)}>0</button>
           <button id="eql" onClick={performCalculation}>=</button>
           <button id="mul" value="*" onClick={e => setOprt(e.target.value)}>*</button>
           <button id="div" value="/" onClick={e => setOprt(e.target.value)}>/</button>

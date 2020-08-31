@@ -2,13 +2,13 @@
     border: double;
     border-radius: 3%;
     background-color: darkslategrey;
-    margin: 150px 575px;
+    margin: 10% 40%;
     text-align: center;
 }
 
 input {
     margin: 20px 20px 10px 10px;
-    height: 40px;
+    height: 25px;
     width: 183px;
 }
 
